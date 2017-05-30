@@ -1,0 +1,9 @@
+ <h1>
+  Login
+</h1>
+
+ <form>
+	<md-input-container><input mdInput placeholder="Nutzername" type="text" name="nutzername" #nutzername></md-input-container>
+	<md-input-container><input mdInput placeholder="Passwort" type="password" name="passwort" #passwort></md-input-container>
+  <button md-button color="primary" type="submit" (click)="login(nutzername.value,passwort.value)">Login</button>
+</form> 

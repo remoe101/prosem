@@ -1,0 +1,53 @@
+<div *ngIf="authService.isLogged()">
+	Hi!
+</div>
+
+
+<h1>
+  Publikationen
+</h1>
+
+<table class="tabelle" border="1">
+	<tr>
+		<!--<th>ID</th>-->
+		<th>Professur</th>
+		<th>Jahr</th>
+		<th>Artikel</th>
+		<th>Bearbeiten</th>
+		<th>Löschen</th>
+	</tr>
+	<tr *ngFor="let item of pubList">
+		<!--<td>{{item.id}}</td>-->
+		<td>{{item.professur}}</td>
+		<td>{{item.jahr}}</td>
+		<td>{{item.artikel}}</td>
+		<td><button md-button (click)="getOne(item.id)">Bearbeiten</button></td>
+		<td><button md-button (click)="deletePub(item.id)">Löschen</button></td>
+	</tr>
+	
+</table>
+
+<button *ngIf="!isNew" md-button color="primary" (click)="showNew()">Neuen Eintrag hinzufügen</button>
+
+<div *ngIf="isNew">
+<h2>Neuen Eintrag hinzufügen:</h2>
+ <form>
+	<md-input-container> <input mdInput placeholder="Professur" type="text" name="professur" #professur></md-input-container>
+	<md-input-container><input mdInput placeholder="Jahr" type="number" name="jahr" #jahr></md-input-container>
+	<md-input-container><input mdInput placeholder="Artikel" type="number" name="artikel" #artikel></md-input-container>
+  	<button md-button color="primary" type="submit" (click)="addPub(professur.value,jahr.value,artikel.value)">Speichern</button>
+	<button md-button (click)="closeNew()">Schließen</button>
+</form> 
+</div>
+
+<div *ngIf="isEdit">
+	<h2>Eintrag editieren:</h2>
+	<form>
+		<!--<md-input-container><input mdInput placeholder="ID" type="hidden" name="id" value="{{selectedPub.id}}" #id></md-input-container>-->
+		<md-input-container><input mdInput placeholder="Professur" type="text" name="professur" value="{{selectedPub.professur}}" #professur></md-input-container>
+		<md-input-container><input mdInput placeholder="Jahr" type="number" name="jahr" value="{{selectedPub.jahr}}" #jahr></md-input-container>
+		<md-input-container><input mdInput placeholder="Artikel" type="number" name="artikel" value="{{selectedPub.artikel}}" #artikel></md-input-container>
+		<button md-button color="primary" type="submit" (click)="editPub(selectedPub.id,professur.value,jahr.value,artikel.value)">Speichern</button><br>
+		<button md-button (click)="closeEdit()">Editieren schließen</button>
+	</form> 
+</div>
