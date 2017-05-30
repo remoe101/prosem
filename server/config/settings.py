@@ -39,11 +39,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-JWT_AUTH = {
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(seconds=50000),
-    'JWT_VERIFY_EXPIRATION': False
-}
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,7 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	'publikationen',
 	'rest_framework',
-	'corsheaders'
+	'corsheaders',
+    'rest_framework.authtoken',
+    'rest_framework_jwt'
 ]
 
 MIDDLEWARE = [
@@ -126,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'CEST'
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 
@@ -141,3 +138,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+JWT_AUTH = {
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer'
+}
