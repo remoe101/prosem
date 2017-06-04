@@ -20,13 +20,14 @@ export class AuthService {
 		return this.http.post(
       this.baseUrl, 
       JSON.stringify({username: nutzername, password: passwort}), 
-			{headers:this.headers}
-			).map((res: any) => {
+			{headers:this.headers})
+      .map((res: any) => {
         const body = res.json();
         if (body.token) {
           localStorage.setItem(this.tokenName, body.token)
           this.token = body.token;
         }
+        return body;
       });
   }
 

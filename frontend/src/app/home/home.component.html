@@ -27,9 +27,11 @@
 	
 </table>
 
+<div *ngIf="authService.isLogged()">
 <button *ngIf="!isNew" md-button color="primary" (click)="showNew()">Neuen Eintrag hinzufügen</button>
+</div>
 
-<div *ngIf="isNew">
+<div *ngIf="isNew" >
 <h2>Neuen Eintrag hinzufügen:</h2>
  <form>
 	<md-input-container> <input mdInput placeholder="Professur" type="text" name="professur" #professur></md-input-container>
