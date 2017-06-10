@@ -1,0 +1,23 @@
+<div class="link" >
+  <a routerLink="/login">Einloggen</a>
+</div>
+
+
+<h1>Herzlich Willkommen</h1>
+<h2>Hier können Sie sich die Publikationen der Informatikfakultät anschauen</h2>
+
+<ngx-charts-pie-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="single"
+  [legend]="showLegend"
+  [explodeSlices]="explodeSlices"
+  [labels]="showLabels"
+  [doughnut]="doughnut">
+</ngx-charts-pie-chart>
+
+
+
+<!--(select)="onSelect($event)"-->
+
+
