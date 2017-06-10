@@ -34,4 +34,9 @@ export class AuthService {
   isLogged(){
     return tokenNotExpired(this.tokenName);
   }
+
+  logout(){
+    localStorage.removeItem(this.tokenName);
+  }
+
 }

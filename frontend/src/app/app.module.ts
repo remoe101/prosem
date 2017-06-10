@@ -8,11 +8,12 @@ import { MdButtonModule, MdInputModule, MdIconModule } from '@angular/material';
 
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { AdminComponent } from './admin/admin.component';
 import { PubService } from './shared/pub.service';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/auth.service';
 import { AuthModule } from './shared/auth.module'
+import { AuthGuard } from "app/shared/auth.guard";
 
 
 const routes: Routes = [
@@ -22,8 +23,9 @@ const routes: Routes = [
 		pathMatch: 'full'
 	},
 	{
-		path: 'home',
-		component: HomeComponent
+		path: 'admin',
+		component: AdminComponent,
+    canActivate: [AuthGuard]
 	},
 	{
 		path: 'login',
@@ -35,7 +37,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    AdminComponent,
     LoginComponent,
   ],
   imports: [
@@ -49,7 +51,7 @@ const routes: Routes = [
     AuthModule,
 	  RouterModule.forRoot(routes)
   ],
-  providers: [PubService, AuthService],
+  providers: [PubService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

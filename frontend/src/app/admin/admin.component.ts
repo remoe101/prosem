@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 
 import { PubService } from '../shared/pub.service';
 import { AuthService } from '../shared/auth.service';
+import { Router } from "@angular/router";
+
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss']
 })
 
 
-export class HomeComponent implements OnInit {
+export class AdminComponent implements OnInit {
 
 	isEdit = false;
 	isNew = false;
@@ -17,7 +19,8 @@ export class HomeComponent implements OnInit {
 	pubList = [];
 	constructor(
 		private pubService: PubService,
-		private authService: AuthService
+		private authService: AuthService,
+		private router: Router
 	) { }
   
 	ngOnInit() {
@@ -97,5 +100,12 @@ export class HomeComponent implements OnInit {
 	closeEdit()
 	{
 		this.isEdit = false;
+	}
+
+	logout()
+	{
+		this.authService.logout();
+        this.router.navigate(['login',{MessageLogout:true}]);
+
 	}
 }

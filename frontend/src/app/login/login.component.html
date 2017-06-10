@@ -7,3 +7,11 @@
 	<md-input-container><input mdInput placeholder="Passwort" type="password" name="passwort" #passwort></md-input-container>
   <button md-button color="primary" type="submit" (click)="login(nutzername.value,passwort.value)">Login</button>
 </form> 
+
+<div *ngIf="MessageFlag">
+	Sie müssen sich einloggen, um Inhalte verändern zu können.
+</div>
+
+<div *ngIf="LogoutFlag">
+	Sie wurden erfolgreich ausgeloggt. Loggen Sie sich erneut ein, um Inhalte verändern zu können.
+</div>
