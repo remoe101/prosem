@@ -1,7 +1,9 @@
-<div class="link" >
+<div class="link" *ngIf="!authService.isLogged()" >
   <a routerLink="/login">Einloggen</a>
 </div>
-
+<div class="link" *ngIf="authService.isLogged()" >
+  <a routerLink="/admin">Adminbereich</a>
+</div>
 
 <h1>Herzlich Willkommen</h1>
 <h2>Hier können Sie sich die Publikationen der Informatikfakultät anschauen</h2>
@@ -15,7 +17,6 @@
   [labels]="showLabels"
   [doughnut]="doughnut">
 </ngx-charts-pie-chart>
-
 
 
 <!--(select)="onSelect($event)"-->

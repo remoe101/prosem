@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { single } from './dummydaten';
 import { PubService } from "app/shared/pub.service";
+import { AuthService } from "app/shared/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -10,21 +10,31 @@ import { PubService } from "app/shared/pub.service";
 export class HomeComponent implements OnInit {
 
 	pubList = [];
-
   constructor(
-    private pubService: PubService
+    private pubService: PubService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
       this.pubService.getAll().subscribe(
-			res => {
-				console.log(res);
-				this.pubList = res;
-			}
-		);
-  }
+        res => {
+          console.log(res);
+          this.pubList = res;
+          this.pubList.forEach(element => {
+            var tmp:any = {};
+            tmp.name = element.professur;
+            tmp.value = element.artikel;
+            this.single.push(tmp);
+            //slice weist gleiches Objekt zu, brauchen wir damit Angular merkt, dass wir was machen
+            this.single = this.single.slice();
+            console.log(this.single);
+          });
+			  }
+		  );
 
-  single:any[] = single;
+}
+    
+  single:any[] = [];
 
   view: any[] = [700,400];
 

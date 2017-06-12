@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
 
 	isEdit = false;
 	isNew = false;
+	errorArray=[];
 	selectedPub;
 	pubList = [];
 	constructor(
@@ -60,6 +61,7 @@ export class AdminComponent implements OnInit {
 
 	closeNew(){
 		this.isNew = false;
+		this.errorArray=[];
 	}
 
 	deletePub(id) {
@@ -73,33 +75,42 @@ export class AdminComponent implements OnInit {
 	}
 
 	addPub(professur, jahr, artikel) {
-		this.pubService.addPub(professur, jahr, artikel).subscribe(
-			res => {
-				this.pubList.push(res);
-				console.log(res);
-				this.sortPubs();
-				this.closeNew();
-			},
-			error => console.log(error)
-		);
+		if (this.isValid(professur,jahr,artikel)){
+			this.pubService.addPub(professur, jahr, artikel).subscribe(
+				res => {
+					this.pubList.push(res);
+					console.log(res);
+					this.sortPubs();
+					this.closeNew();
+					this.errorArray=[];
+				},
+				error => 
+				{
+					console.log(error)
+				}
+			);
+		}
 	}
 	
 	editPub(id, professur, jahr, artikel) {
-		this.pubService.editPub(id, professur, jahr, artikel).subscribe(
-			res => {
-				this.pubList = this.pubList.filter(pub => pub.id!=id);
-				this.pubList.push(res);
-				this.sortPubs();
-				console.log(res);
-				this.closeEdit();
-			},
-			error => console.log(error)
-		);
+		if (this.isValid(professur,jahr,artikel)){
+			this.pubService.editPub(id, professur, jahr, artikel).subscribe(
+				res => {
+					this.pubList = this.pubList.filter(pub => pub.id!=id);
+					this.pubList.push(res);
+					this.sortPubs();
+					console.log(res);
+					this.closeEdit();
+				},
+				error => console.log(error)
+			);
+		}
 	}
 	
 	closeEdit()
 	{
 		this.isEdit = false;
+		this.errorArray=[];
 	}
 
 	logout()
@@ -107,5 +118,21 @@ export class AdminComponent implements OnInit {
 		this.authService.logout();
         this.router.navigate(['login',{MessageLogout:true}]);
 
+	}
+	
+	isValid(professur, jahr, artikel):boolean
+	{
+		this.errorArray=[];
+		if ((jahr<2011 || jahr>2018) && artikel<0) {
+			this.errorArray.push("Das Jahr muss zwischen 2011 und 2018 liegen.");
+			this.errorArray.push("Es müssen mindestens 0 Artikel sein.");	
+		}
+		else if (jahr<2011 || jahr>2018)
+			this.errorArray.push("Das Jahr muss zwischen 2011 und 2018 liegen.");
+		else if (artikel<0)
+			this.errorArray.push("Es müssen mindestens 0 Artikel sein.");
+		else
+			return true;
+		return false;		
 	}
 }
