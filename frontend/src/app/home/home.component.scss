@@ -1,3 +1,22 @@
 .link {
     float: right;
 }
+
+.route{
+    color: blue;
+    cursor: pointer;
+}
+
+.parent {
+  display: flex;
+}
+
+.narrow {
+    width: 300px;
+    background: lightgrey;
+}
+
+.wide {
+  flex: 1;
+  /* Grow to rest of container */
+}

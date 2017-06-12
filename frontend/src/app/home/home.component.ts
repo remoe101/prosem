@@ -10,6 +10,9 @@ import { AuthService } from "app/shared/auth.service";
 export class HomeComponent implements OnInit {
 
 	pubList = [];
+  listeJahre =[];
+  listeProfessur = [];
+  legendTitle="Legende";
   constructor(
     private pubService: PubService,
     private authService: AuthService
@@ -18,23 +21,47 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
       this.pubService.getAll().subscribe(
         res => {
-          console.log(res);
           this.pubList = res;
-          this.pubList.forEach(element => {
-            var tmp:any = {};
-            tmp.name = element.professur;
-            tmp.value = element.artikel;
-            this.single.push(tmp);
-            //slice weist gleiches Objekt zu, brauchen wir damit Angular merkt, dass wir was machen
-            this.single = this.single.slice();
-            console.log(this.single);
-          });
-			  }
+          this.PieFormat(this.pubList, "professur");
+          this.listeJahre = [...new Set(this.pubList.map(item=>item.jahr))];
+          this.listeProfessur = [...new Set(this.pubList.map(item=>item.professur))];
+        }
 		  );
 
 }
-    
-  single:any[] = [];
+
+  PieFormat(liste, key){
+      this.daten = []
+      liste.forEach(element => {
+        var tmp:any = {};
+        tmp.name = element[key];
+        tmp.value = element.artikel;
+        this.daten.push(tmp);
+        //slice weist gleiches Objekt zu, brauchen wir damit Angular merkt, dass wir was machen
+        this.daten = this.daten.slice();
+      });
+  }
+
+  filterNachProfessurArray = []
+  filterNachProfessur(professur){
+    this.filterNachProfessurArray = this.pubList.filter(item => item.professur == professur)
+    this.PieFormat(this.filterNachProfessurArray,"jahr");
+    this.legendTitle = professur;
+  }
+
+ filterNachJahrArray = []
+  filterNachJahr(jahr){
+    this.filterNachJahrArray = this.pubList.filter(item => item.jahr == jahr)
+    this.PieFormat(this.filterNachJahrArray,"professur")
+    this.legendTitle = jahr;
+  }
+
+  filterAlle(){
+    this.PieFormat(this.pubList, "professur");
+    this.legendTitle = "Legende";
+  }
+
+  daten:any[] = [];
 
   view: any[] = [700,400];
 
@@ -47,5 +74,6 @@ export class HomeComponent implements OnInit {
   showLabels = true;
   explodeSlices = false;
   doughnut = false;
+
 
 }

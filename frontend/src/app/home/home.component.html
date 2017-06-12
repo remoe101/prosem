@@ -8,16 +8,47 @@
 <h1>Herzlich Willkommen</h1>
 <h2>Hier können Sie sich die Publikationen der Informatikfakultät anschauen</h2>
 
-<ngx-charts-pie-chart
+<div class="parent">
+<div class="wide">
+  <ngx-charts-pie-chart
   [view]="view"
   [scheme]="colorScheme"
-  [results]="single"
+  [results]="daten"
   [legend]="showLegend"
   [explodeSlices]="explodeSlices"
   [labels]="showLabels"
+  [legendTitle]="legendTitle"
   [doughnut]="doughnut">
 </ngx-charts-pie-chart>
+</div>
 
+
+<div class="narrow">
+  <table>
+    <tr>  
+      <th>Professuren:</th>  
+      <th></th>
+      <th>Jahre:</th>  
+    </tr>  
+    <tr>
+      <td>
+      <ul *ngFor="let item of listeProfessur">
+        <li><a class="route" (click)="filterNachProfessur(item)">{{item}}</a></li>  
+      </ul>
+      </td>
+      <td></td>
+      <td>
+      <ul *ngFor="let item of listeJahre">
+        <li><a class="route" (click)="filterNachJahr(item)">{{item}}</a></li>  
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <a class="route" (click)="filterAlle()">      - alle Einträge</a>
+    </tr>
+  </table>
+</div>
+</div>
 
 <!--(select)="onSelect($event)"-->
 
