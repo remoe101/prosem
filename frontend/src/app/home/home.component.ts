@@ -22,9 +22,12 @@ export class HomeComponent implements OnInit {
       this.pubService.getAll().subscribe(
         res => {
           this.pubList = res;
+          this.sortPubsProf(this.pubList);
           this.PieFormat(this.pubList, "professur");
           this.listeJahre = [...new Set(this.pubList.map(item=>item.jahr))];
           this.listeProfessur = [...new Set(this.pubList.map(item=>item.professur))];
+          this.sortPubsJahr(this.listeJahre);
+          this.sortPubsProf(this.listeProfessur);
         }
 		  );
 
@@ -44,15 +47,15 @@ export class HomeComponent implements OnInit {
 
   filterNachProfessurArray = []
   filterNachProfessur(professur){
-    this.filterNachProfessurArray = this.pubList.filter(item => item.professur == professur)
+    this.filterNachProfessurArray = this.pubList.filter(item => item.professur == professur);
     this.PieFormat(this.filterNachProfessurArray,"jahr");
     this.legendTitle = professur;
   }
 
  filterNachJahrArray = []
   filterNachJahr(jahr){
-    this.filterNachJahrArray = this.pubList.filter(item => item.jahr == jahr)
-    this.PieFormat(this.filterNachJahrArray,"professur")
+    this.filterNachJahrArray = this.pubList.filter(item => item.jahr == jahr);
+    this.PieFormat(this.filterNachJahrArray,"professur");
     this.legendTitle = jahr;
   }
 
@@ -61,19 +64,33 @@ export class HomeComponent implements OnInit {
     this.legendTitle = "Legende";
   }
 
+	sortPubsProf(liste){
+	    liste.sort((x, y) => {
+					if (x.professur > y.professur)
+						return 1;
+					else
+						return -1;
+				});
+	}
+
+	sortPubsJahr(liste){
+	    liste.sort(this.sortNumber);
+	}
+
+  sortNumber(a,b) {
+    return a - b;
+}
+
   daten:any[] = [];
 
   view: any[] = [700,400];
 
-  showLegend = true;
-
   colorScheme = {
     domain: ['#5AA454','#A10A28','#C7B42C','#AAAAAA']
   }
-
+  
+  showLegend = true;
   showLabels = true;
-  explodeSlices = false;
-  doughnut = false;
 
 
 }

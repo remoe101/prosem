@@ -6,6 +6,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Veroeffentlichungen(models.Model):
+	class Meta:
+		unique_together = (('professur', 'jahr'),)
+
 	professur = models.CharField(max_length=200)
 	jahr = models.IntegerField(
 		default=2017,
